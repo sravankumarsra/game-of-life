@@ -8,8 +8,14 @@ pipeline{
                 }
           stage('Build package'){
                 steps{
-                sh 'mvn clean'
+                sh 'mvn clean package'
                 }
                 }
+	  stage('Archieve and Test results'){
+		steps{
+		archiveArtifacts artifacts: '**/*.war', followSymlinks: false
+		junit '**/surefire-reports/*.xml'
+		}
+		}
         }
 }
